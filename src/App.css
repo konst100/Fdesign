@@ -343,6 +343,28 @@ label {
   will-change: transform;
 }
 
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.hero-meta span,
+.hero-note {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-meta span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
 .hero-title {
   font-size: clamp(2.1rem, 4.6vw, 4rem);
   max-width: 8.6ch;
@@ -415,8 +437,13 @@ label {
   margin-top: 32px;
 }
 
+.hero-note {
+  margin-top: 16px;
+  color: rgba(244, 239, 231, 0.74);
+}
+
 .hero-metrics {
-  margin-top: 42px;
+  margin-top: 28px;
 }
 
 .metric {
@@ -954,6 +981,10 @@ label {
 
   .hero-copy--floating .hero-text {
     max-width: 38ch;
+  }
+
+  .hero-note {
+    letter-spacing: 0.06em;
   }
 
   .hero-side-caption {

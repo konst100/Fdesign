@@ -70,14 +70,18 @@ export function HeroSection({ onNavigate }) {
         className="hero-copy hero-copy--floating"
         style={{ transform: `translate3d(0, ${parallax.copy}px, 0)` }}
       >
+        <div className="hero-meta">
+          <span>Berlin based</span>
+          <span>Available for select projects</span>
+        </div>
         <p className="eyebrow">Boutique digital studio</p>
         <h1 className="hero-title">
-          FDesign builds modern websites that feel
-          <span>expensive, clear, and ready to sell.</span>
+          Modern websites for brands that need to feel
+          <span>clear, expensive, and ready to sell.</span>
         </h1>
         <p className="hero-text">
-          For founders, agencies, and service brands that have outgrown templates and need a
-          cleaner, sharper digital presence.
+          Strategy, design, and frontend delivery for service brands that have outgrown templates
+          and need a sharper digital presence.
         </p>
 
         <div className="hero-actions">
@@ -88,6 +92,7 @@ export function HeroSection({ onNavigate }) {
             View selected work
           </button>
         </div>
+        <p className="hero-note">Sharper positioning, calmer process, and a site that lands with authority.</p>
 
         <div className="hero-metrics">
           <Metric value="5+" label="Years designing websites" />
@@ -102,7 +107,7 @@ export function HeroSection({ onNavigate }) {
       >
         <span>Editorial hero direction</span>
         <strong>Architectural calm with a premium digital tone.</strong>
-        <p>Full-bleed image, smaller side copy, and restrained motion that feels polished.</p>
+        <p>Full-bleed atmosphere, compact copy, restrained motion.</p>
       </aside>
     </section>
   )

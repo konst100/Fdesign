@@ -120,6 +120,8 @@ a {
 .hero-metrics,
 .cta-panel__actions,
 .chip-row,
+.header-tools,
+.language-switcher,
 .footer-links,
 .site-nav {
   display: flex;
@@ -186,6 +188,37 @@ label {
 
 .site-nav {
   justify-content: center;
+}
+
+.header-tools {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.language-switcher {
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.language-button {
+  min-width: 44px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.language-button:hover,
+.language-button.is-active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-link,
@@ -937,8 +970,18 @@ label {
   .cta-panel__actions,
   .button,
   .header-cta,
-  .nav-link {
+  .nav-link,
+  .header-tools {
     width: 100%;
+  }
+
+  .header-tools {
+    justify-content: stretch;
+  }
+
+  .language-switcher {
+    width: 100%;
+    justify-content: center;
   }
 
   .card-grid--services,

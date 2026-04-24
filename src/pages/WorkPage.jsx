@@ -1,13 +1,14 @@
 import { CTASection, PageHero } from '../components/Sections.jsx'
-import { workItems } from '../siteData.js'
 
-export function WorkPage({ onNavigate }) {
+export function WorkPage({ onNavigate, content }) {
+  const { workItems, workPage } = content
+
   return (
     <>
       <PageHero
-        eyebrow="Work"
-        title="A case-study style portfolio built to feel credible, polished, and commercially sharp."
-        text="These examples show the level of thinking, pacing, and presentation FDesign is designed to deliver."
+        eyebrow={workPage.hero.eyebrow}
+        title={workPage.hero.title}
+        text={workPage.hero.text}
       />
       <section className="content-section">
         <div className="work-grid work-grid--expanded">
@@ -21,13 +22,13 @@ export function WorkPage({ onNavigate }) {
               <p>{item.summary}</p>
               <div className="work-card__footer">
                 <strong>{item.budget}</strong>
-                <span>8 week window</span>
+                <span>{workPage.footerLabel}</span>
               </div>
             </article>
           ))}
         </div>
       </section>
-      <CTASection onNavigate={onNavigate} />
+      <CTASection onNavigate={onNavigate} content={content} />
     </>
   )
 }

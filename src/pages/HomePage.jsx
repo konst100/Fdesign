@@ -1,16 +1,17 @@
 import { CTASection, HeroSection, SectionHeading } from '../components/Sections.jsx'
-import { offerings, serviceCards, testimonials, workItems } from '../siteData.js'
 
-export function HomePage({ onNavigate }) {
+export function HomePage({ onNavigate, content }) {
+  const { home, offerings, serviceCards, testimonials, workItems } = content
+
   return (
     <>
-      <HeroSection onNavigate={onNavigate} />
+      <HeroSection onNavigate={onNavigate} content={content} />
 
       <section className="content-section">
         <SectionHeading
-          eyebrow="What I do"
-          title="A modern digital face for companies that have better work than their current website suggests."
-          text="FDesign helps businesses look more established, communicate faster, and convert with less friction."
+          eyebrow={home.services.eyebrow}
+          title={home.services.title}
+          text={home.services.text}
         />
 
         <div className="card-grid card-grid--services">
@@ -25,9 +26,9 @@ export function HomePage({ onNavigate }) {
 
       <section className="content-section">
         <SectionHeading
-          eyebrow="Selected projects"
-          title="Work that balances visual confidence with business intent."
-          text="Every project below is fictionalised for this demo, but the structure, budgets, and outcomes are grounded in real-world agency work."
+          eyebrow={home.selectedProjects.eyebrow}
+          title={home.selectedProjects.title}
+          text={home.selectedProjects.text}
         />
 
         <div className="work-grid">
@@ -45,16 +46,16 @@ export function HomePage({ onNavigate }) {
         </div>
 
         <button className="button button--ghost" onClick={() => onNavigate('/work')}>
-          Explore all case studies
+          {home.selectedProjects.button}
         </button>
       </section>
 
       <section className="content-section content-section--split">
         <div>
           <SectionHeading
-            eyebrow="Packages"
-            title="Built for real budgets, not fantasy pitch decks."
-            text="You do not need a 40-person agency to get a site that looks premium. You need a tight process, clear taste, and someone who can actually ship."
+            eyebrow={home.packages.eyebrow}
+            title={home.packages.title}
+            text={home.packages.text}
           />
         </div>
 
@@ -78,7 +79,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       <section className="content-section">
-        <SectionHeading eyebrow="Client words" title="What people usually say after launch." />
+        <SectionHeading eyebrow={home.testimonials.eyebrow} title={home.testimonials.title} />
         <div className="testimonial-grid">
           {testimonials.map((item) => (
             <article className="quote-card" key={item.author}>
@@ -90,7 +91,7 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      <CTASection onNavigate={onNavigate} />
+      <CTASection onNavigate={onNavigate} content={content} />
     </>
   )
 }

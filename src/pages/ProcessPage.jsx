@@ -1,13 +1,14 @@
 import { CTASection, DetailItem, PageHero, SectionHeading } from '../components/Sections.jsx'
-import { processSteps } from '../siteData.js'
 
-export function ProcessPage({ onNavigate }) {
+export function ProcessPage({ onNavigate, content }) {
+  const { processPage, processSteps } = content
+
   return (
     <>
       <PageHero
-        eyebrow="Process"
-        title="A calm, structured process that keeps momentum without chaos."
-        text="Clear checkpoints, realistic expectations, and enough flexibility to improve the work while it is being made."
+        eyebrow={processPage.hero.eyebrow}
+        title={processPage.hero.title}
+        text={processPage.hero.text}
       />
       <section className="content-section">
         <div className="process-grid">
@@ -23,17 +24,17 @@ export function ProcessPage({ onNavigate }) {
       <section className="content-section content-section--split">
         <div>
           <SectionHeading
-            eyebrow="What you can expect"
-            title="No vague timelines, no disappearing act, no endless revision spiral."
+            eyebrow={processPage.expectation.eyebrow}
+            title={processPage.expectation.title}
           />
         </div>
         <div className="detail-list">
-          <DetailItem title="Weekly rhythm" text="Regular updates with visible progress and concrete next steps." />
-          <DetailItem title="Decision points" text="Clear approvals at each stage so the project keeps moving." />
-          <DetailItem title="Practical scope" text="Enough ambition to look premium, enough discipline to actually launch." />
+          {processPage.expectation.items.map((item) => (
+            <DetailItem key={item.title} title={item.title} text={item.text} />
+          ))}
         </div>
       </section>
-      <CTASection onNavigate={onNavigate} />
+      <CTASection onNavigate={onNavigate} content={content} />
     </>
   )
 }

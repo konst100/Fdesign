@@ -1,17 +1,19 @@
-import { contactDetails } from '../siteData.js'
+import { languages } from '../siteData.js'
 
-export function Header({ currentPath, onNavigate, items }) {
+export function Header({ currentPath, onNavigate, items, content, language, onLanguageChange }) {
+  const { contactDetails, layout } = content
+
   return (
     <header className="site-header">
       <button className="brand-mark" onClick={() => onNavigate('/')}>
         <span className="brand-mark__icon">FD</span>
         <span className="brand-mark__text">
           <strong>FDesign</strong>
-          <small>Web Design & Development</small>
+          <small>{layout.brandTagline}</small>
         </span>
       </button>
 
-      <nav className="site-nav" aria-label="Primary">
+      <nav className="site-nav" aria-label={layout.navAriaLabel}>
         {items.map((item) => (
           <button
             key={item.path}
@@ -23,22 +25,36 @@ export function Header({ currentPath, onNavigate, items }) {
         ))}
       </nav>
 
+      <div className="header-tools">
+        <div className="language-switcher" aria-label={layout.languageLabel}>
+          {languages.map((item) => (
+            <button
+              key={item.code}
+              className={language === item.code ? 'language-button is-active' : 'language-button'}
+              onClick={() => onLanguageChange(item.code)}
+              type="button"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
       <a className="header-cta" href={`mailto:${contactDetails.email}`}>
-        Book a call
+          {layout.headerCta}
       </a>
+      </div>
     </header>
   )
 }
 
-export function Footer({ onNavigate, items }) {
+export function Footer({ onNavigate, items, content }) {
+  const { contactDetails, layout } = content
+
   return (
     <footer className="site-footer">
       <div>
-        <p className="eyebrow">FDesign</p>
-        <p className="footer-note">
-          Premium websites for modern businesses that want to look sharper, communicate better,
-          and convert with more confidence.
-        </p>
+        <p className="eyebrow">{layout.footerEyebrow}</p>
+        <p className="footer-note">{layout.footerNote}</p>
       </div>
 
       <div className="footer-links">

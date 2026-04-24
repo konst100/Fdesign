@@ -7,15 +7,7 @@ import { HomePage } from './pages/HomePage.jsx'
 import { ProcessPage } from './pages/ProcessPage.jsx'
 import { ServicesPage } from './pages/ServicesPage.jsx'
 import { WorkPage } from './pages/WorkPage.jsx'
-
-const navigationItems = [
-  { path: '/', label: 'Home' },
-  { path: '/services', label: 'Services' },
-  { path: '/work', label: 'Work' },
-  { path: '/about', label: 'About' },
-  { path: '/process', label: 'Process' },
-  { path: '/contact', label: 'Contact' },
-]
+import { defaultLanguage, getSiteContent, languages } from './siteData.js'
 
 const pages = {
   '/': HomePage,
@@ -28,15 +20,36 @@ const pages = {
 
 function App() {
   const [path, setPath] = useState(() => window.location.pathname || '/')
+  const [language, setLanguage] = useState(() => {
+    const storedLanguage = window.localStorage.getItem('fdesign-language')
+
+    if (storedLanguage && languages.some((item) => item.code === storedLanguage)) {
+      return storedLanguage
+    }
+
+    const browserLanguage = window.navigator.language.slice(0, 2).toLowerCase()
+    return languages.some((item) => item.code === browserLanguage) ? browserLanguage : defaultLanguage
+  })
+
+  const content = useMemo(() => getSiteContent(language), [language])
 
   const syncLocation = useEffectEvent(() => {
     setPath(window.location.pathname || '/')
+  })
+
+  const switchLanguage = useEffectEvent((nextLanguage) => {
+    setLanguage(nextLanguage)
   })
 
   useEffect(() => {
     window.addEventListener('popstate', syncLocation)
     return () => window.removeEventListener('popstate', syncLocation)
   }, [syncLocation])
+
+  useEffect(() => {
+    window.localStorage.setItem('fdesign-language', language)
+    document.documentElement.lang = language
+  }, [language])
 
   const navigate = useEffectEvent((nextPath) => {
     if (nextPath === path) {
@@ -58,11 +71,18 @@ function App() {
       <div className="orb orb-one" />
       <div className="orb orb-two" />
       <div className="orb orb-three" />
-      <Header currentPath={path} onNavigate={navigate} items={navigationItems} />
+      <Header
+        currentPath={path}
+        onNavigate={navigate}
+        items={content.navigation}
+        content={content}
+        language={language}
+        onLanguageChange={switchLanguage}
+      />
       <main className="page-shell">
-        <Page onNavigate={navigate} />
+        <Page onNavigate={navigate} content={content} language={language} />
       </main>
-      <Footer onNavigate={navigate} items={navigationItems} />
+      <Footer onNavigate={navigate} items={content.navigation} content={content} />
     </div>
   )
 }

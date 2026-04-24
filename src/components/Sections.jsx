@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { contactDetails } from '../siteData.js'
 import heroEditorial from '../assets/hero-editorial.png'
 
-export function HeroSection({ onNavigate }) {
+export function HeroSection({ onNavigate, content }) {
   const heroRef = useRef(null)
   const [parallax, setParallax] = useState({ image: 0, copy: 0, side: 0 })
+  const { hero } = content
 
   useEffect(() => {
     let frame = 0
@@ -62,7 +62,7 @@ export function HeroSection({ onNavigate }) {
         <img
           className="hero-media__image"
           src={heroEditorial}
-          alt="Dark editorial interior with glass walls, concrete floors, and warm architectural lighting."
+          alt={hero.imageAlt}
         />
       </div>
 
@@ -71,33 +71,31 @@ export function HeroSection({ onNavigate }) {
         style={{ transform: `translate3d(0, ${parallax.copy}px, 0)` }}
       >
         <div className="hero-meta">
-          <span>Berlin based</span>
-          <span>Available for select projects</span>
+          {hero.meta.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
         </div>
-        <p className="eyebrow">Boutique digital studio</p>
+        <p className="eyebrow">{hero.eyebrow}</p>
         <h1 className="hero-title">
-          Modern websites for brands that need to feel
-          <span>clear, expensive, and ready to sell.</span>
+          {hero.title}
+          <span>{hero.accent}</span>
         </h1>
-        <p className="hero-text">
-          Strategy, design, and frontend delivery for service brands that have outgrown templates
-          and need a sharper digital presence.
-        </p>
+        <p className="hero-text">{hero.text}</p>
 
         <div className="hero-actions">
           <button className="button button--primary" onClick={() => onNavigate('/contact')}>
-            Start a project
+            {hero.primaryCta}
           </button>
           <button className="button button--ghost" onClick={() => onNavigate('/work')}>
-            View selected work
+            {hero.secondaryCta}
           </button>
         </div>
-        <p className="hero-note">Sharper positioning, calmer process, and a site that lands with authority.</p>
+        <p className="hero-note">{hero.note}</p>
 
         <div className="hero-metrics">
-          <Metric value="5+" label="Years designing websites" />
-          <Metric value="32" label="Launched client projects" />
-          <Metric value="2-10" label="Week project windows" />
+          {hero.metrics.map((item) => (
+            <Metric key={item.label} value={item.value} label={item.label} />
+          ))}
         </div>
       </div>
 
@@ -105,9 +103,9 @@ export function HeroSection({ onNavigate }) {
         className="hero-side-caption"
         style={{ transform: `translate3d(0, ${parallax.side}px, 0)` }}
       >
-        <span>Editorial hero direction</span>
-        <strong>Architectural calm with a premium digital tone.</strong>
-        <p>Full-bleed atmosphere, compact copy, restrained motion.</p>
+        <span>{hero.sideEyebrow}</span>
+        <strong>{hero.sideTitle}</strong>
+        <p>{hero.sideText}</p>
       </aside>
     </section>
   )
@@ -142,19 +140,21 @@ export function DetailItem({ title, text }) {
   )
 }
 
-export function CTASection({ onNavigate }) {
+export function CTASection({ onNavigate, content }) {
+  const { cta, contactDetails } = content
+
   return (
     <section className="cta-panel">
       <div>
-        <p className="eyebrow">Ready when you are</p>
-        <h2>Need a website that looks current, premium, and built with intent?</h2>
+        <p className="eyebrow">{cta.eyebrow}</p>
+        <h2>{cta.title}</h2>
       </div>
       <div className="cta-panel__actions">
         <button className="button button--primary" onClick={() => onNavigate('/contact')}>
-          Book a discovery call
+          {cta.primary}
         </button>
         <a className="button button--ghost" href={`mailto:${contactDetails.email}`}>
-          Email FDesign
+          {cta.secondary}
         </a>
       </div>
     </section>

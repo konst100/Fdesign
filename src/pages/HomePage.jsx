@@ -40,7 +40,7 @@ export function HomePage({ onNavigate, content }) {
               </div>
               <h3>{item.outcome}</h3>
               <p>{item.summary}</p>
-              <strong>{item.budget}</strong>
+              {item.budget ? <strong>{item.budget}</strong> : null}
             </article>
           ))}
         </div>
@@ -50,40 +50,42 @@ export function HomePage({ onNavigate, content }) {
         </button>
       </section>
 
-      <section className="content-section content-section--split">
-        <div>
-          <SectionHeading
-            eyebrow={home.packages.eyebrow}
-            title={home.packages.title}
-            text={home.packages.text}
-          />
-        </div>
+      {offerings.length ? (
+        <section className="content-section content-section--split">
+          <div>
+            <SectionHeading
+              eyebrow={home.packages.eyebrow}
+              title={home.packages.title}
+              text={home.packages.text}
+            />
+          </div>
 
-        <div className="pricing-list">
-          {offerings.map((item) => (
-            <article className="pricing-card" key={item.name}>
-              <div className="pricing-card__head">
-                <h3>{item.name}</h3>
-                <strong>{item.price}</strong>
-              </div>
-              <p>{item.description}</p>
-              <span>{item.length}</span>
-              <ul>
-                {item.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
+          <div className="pricing-list">
+            {offerings.map((item) => (
+              <article className="pricing-card" key={item.name}>
+                <div className="pricing-card__head">
+                  <h3>{item.name}</h3>
+                  <strong>{item.price}</strong>
+                </div>
+                <p>{item.description}</p>
+                <span>{item.length}</span>
+                <ul>
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="content-section">
         <SectionHeading eyebrow={home.testimonials.eyebrow} title={home.testimonials.title} />
         <div className="testimonial-grid">
           {testimonials.map((item) => (
             <article className="quote-card" key={item.author}>
-              <p>“{item.quote}”</p>
+              <p>"{item.quote}"</p>
               <strong>{item.author}</strong>
               <span>{item.role}</span>
             </article>

@@ -1,13 +1,15 @@
-import { startTransition, useEffect, useEffectEvent, useMemo, useState } from 'react'
+import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { Footer, Header } from './components/Layout.jsx'
 import { AboutPage } from './pages/AboutPage.jsx'
 import { ContactPage } from './pages/ContactPage.jsx'
 import { HomePage } from './pages/HomePage.jsx'
+import { ImprintPage } from './pages/ImprintPage.jsx'
 import { ProcessPage } from './pages/ProcessPage.jsx'
+import { PrivacyPage } from './pages/PrivacyPage.jsx'
 import { ServicesPage } from './pages/ServicesPage.jsx'
 import { WorkPage } from './pages/WorkPage.jsx'
-import { defaultLanguage, getSiteContent, languages } from './siteData.js'
+import { defaultLanguage, getPreparedSiteContent, languages } from './siteData.js'
 
 const pages = {
   '/': HomePage,
@@ -16,6 +18,8 @@ const pages = {
   '/about': AboutPage,
   '/process': ProcessPage,
   '/contact': ContactPage,
+  '/impressum': ImprintPage,
+  '/datenschutz': PrivacyPage,
 }
 
 function App() {
@@ -31,15 +35,15 @@ function App() {
     return languages.some((item) => item.code === browserLanguage) ? browserLanguage : defaultLanguage
   })
 
-  const content = useMemo(() => getSiteContent(language), [language])
+  const content = useMemo(() => getPreparedSiteContent(language), [language])
 
-  const syncLocation = useEffectEvent(() => {
+  const syncLocation = useCallback(() => {
     setPath(window.location.pathname || '/')
-  })
+  }, [])
 
-  const switchLanguage = useEffectEvent((nextLanguage) => {
+  const switchLanguage = useCallback((nextLanguage) => {
     setLanguage(nextLanguage)
-  })
+  }, [])
 
   useEffect(() => {
     window.addEventListener('popstate', syncLocation)
@@ -51,7 +55,7 @@ function App() {
     document.documentElement.lang = language
   }, [language])
 
-  const navigate = useEffectEvent((nextPath) => {
+  const navigate = useCallback((nextPath) => {
     if (nextPath === path) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
@@ -62,7 +66,7 @@ function App() {
       setPath(nextPath)
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  })
+  }, [path])
 
   const Page = useMemo(() => pages[path] || HomePage, [path])
 

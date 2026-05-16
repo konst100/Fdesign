@@ -20,10 +20,12 @@ export function WorkPage({ onNavigate, content }) {
               </div>
               <h3>{item.outcome}</h3>
               <p>{item.summary}</p>
-              <div className="work-card__footer">
-                <strong>{item.budget}</strong>
-                <span>{workPage.footerLabel}</span>
-              </div>
+              {item.budget || workPage.footerLabel ? (
+                <div className="work-card__footer">
+                  {item.budget ? <strong>{item.budget}</strong> : <span />}
+                  {workPage.footerLabel ? <span>{workPage.footerLabel}</span> : null}
+                </div>
+              ) : null}
             </article>
           ))}
         </div>

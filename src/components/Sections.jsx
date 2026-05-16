@@ -83,10 +83,16 @@ export function HeroSection({ onNavigate, content }) {
         <p className="hero-text">{hero.text}</p>
 
         <div className="hero-actions">
-          <button className="button button--primary" onClick={() => onNavigate('/contact')}>
+          <button
+            className="button button--primary"
+            onClick={() => onNavigate(hero.primaryHref || '/contact')}
+          >
             {hero.primaryCta}
           </button>
-          <button className="button button--ghost" onClick={() => onNavigate('/work')}>
+          <button
+            className="button button--ghost"
+            onClick={() => onNavigate(hero.secondaryHref || '/work')}
+          >
             {hero.secondaryCta}
           </button>
         </div>
@@ -142,6 +148,8 @@ export function DetailItem({ title, text }) {
 
 export function CTASection({ onNavigate, content }) {
   const { cta, contactDetails } = content
+  const primaryHref = cta.primaryHref || '/contact'
+  const secondaryHref = cta.secondaryHref || `mailto:${contactDetails.email}`
 
   return (
     <section className="cta-panel">
@@ -150,10 +158,10 @@ export function CTASection({ onNavigate, content }) {
         <h2>{cta.title}</h2>
       </div>
       <div className="cta-panel__actions">
-        <button className="button button--primary" onClick={() => onNavigate('/contact')}>
+        <button className="button button--primary" onClick={() => onNavigate(primaryHref)}>
           {cta.primary}
         </button>
-        <a className="button button--ghost" href={`mailto:${contactDetails.email}`}>
+        <a className="button button--ghost" href={secondaryHref}>
           {cta.secondary}
         </a>
       </div>
